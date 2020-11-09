@@ -1,3 +1,3 @@
 export const pullSpaces = (state) => {
-  return state.spaces.all;
+  return { status: state.spaces.status, data: state.spaces.data };
 };

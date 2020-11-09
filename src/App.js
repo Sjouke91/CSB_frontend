@@ -11,9 +11,9 @@ import Login from "./pages/Login";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
-import { Jumbotron } from "react-bootstrap";
 import Spaces from "./pages/Spaces/Spaces";
 import MySpace from "./pages/MySpace/MySpace";
+import ViewSpace from "./pages/ViewSpace/ViewSpace";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function App() {
         <Route exact path="/" component={Spaces} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
-        <Route path="/spaces/:id" component={Spaces} />
+        <Route path="/spaces/:id" component={ViewSpace} />
         <Route path="/user" component={MySpace} />
       </Switch>
     </div>

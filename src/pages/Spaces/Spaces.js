@@ -22,25 +22,29 @@ export default function Spaces() {
         <h1>Spaces</h1>
       </Jumbotron>
       <div className="spacesList">
-        {spaces.map((s) => {
-          console.log(s);
-          return (
-            <div
-              className="spaceCard"
-              key={s.userId}
-              style={{
-                backgroundColor: `${s.backgroundColor}`,
-                color: `${s.color}`,
-              }}
-            >
-              <h2>{s.title}</h2>
-              <p>{s.description}</p>
-              <Link to={`/spaces/${s.userId}`}>
-                <button>visit page</button>
-              </Link>
-            </div>
-          );
-        })}
+        {spaces.status === "Loading" ? (
+          <h2>Loading spaces...</h2>
+        ) : (
+          spaces.data.map((s) => {
+            console.log(s);
+            return (
+              <div
+                className="spaceCard"
+                key={s.userId}
+                style={{
+                  backgroundColor: `${s.backgroundColor}`,
+                  color: `${s.color}`,
+                }}
+              >
+                <h2>{s.title}</h2>
+                <p>{s.description}</p>
+                <Link to={`/spaces/${s.userId}`}>
+                  <button>visit page</button>
+                </Link>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
