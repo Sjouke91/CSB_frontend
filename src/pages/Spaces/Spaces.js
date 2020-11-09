@@ -10,8 +10,6 @@ export default function Spaces() {
   const dispatch = useDispatch();
   const spaces = useSelector(pullSpaces);
 
-  console.log("this is spaces", spaces);
-
   useEffect(() => {
     dispatch(getSpaces());
   }, [dispatch]);
@@ -26,7 +24,6 @@ export default function Spaces() {
           <h2>Loading spaces...</h2>
         ) : (
           spaces.data.map((s) => {
-            console.log(s);
             return (
               <div
                 className="spaceCard"

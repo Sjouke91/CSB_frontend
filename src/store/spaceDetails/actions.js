@@ -5,7 +5,6 @@ export const getSpaceDetails = (id) => async (dispatch, getState) => {
   dispatch(loadingSpaceDetails());
   try {
     const spaceDetails = await axios.get(`${apiUrl}/spaces/${id}`);
-    console.log("this is details", spaceDetails.data);
     dispatch(pushSpaceDetails(spaceDetails.data));
   } catch (e) {
     console.log(e.message);

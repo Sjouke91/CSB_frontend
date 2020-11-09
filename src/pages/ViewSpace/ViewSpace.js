@@ -5,6 +5,7 @@ import { getSpaceDetails } from "../../store/spaceDetails/actions";
 import { pullStories } from "../../store/spaceDetails/selectors";
 import { Jumbotron } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import moment from "moment";
 
 export default function ViewSpace() {
   const userId = useParams().id;
@@ -12,12 +13,20 @@ export default function ViewSpace() {
   const spaceDetails = useSelector(pullStories);
   const storiesArray = spaceDetails.stories;
 
+  const sorted_Array = storiesArray
+    ? storiesArray.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+    : [];
+
+  console.log("this is sorted:", sorted_Array);
+
   useEffect(() => {
     dispatch(getSpaceDetails(userId));
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   return (
-    <div className="spacesPage">
+    <div className="detailPage">
       <Jumbotron>
         <h1>Details page</h1>
       </Jumbotron>
@@ -25,19 +34,20 @@ export default function ViewSpace() {
         {!spaceDetails.stories ? (
           <h2>Loading... </h2>
         ) : (
-          spaceDetails.stories.map((s) => {
-            console.log("this is s", s);
+          sorted_Array.map((s) => {
             return (
               <div
-                className="spaceCard"
+                className="storyCard"
                 key={s.id}
                 style={{
                   backgroundColor: `${spaceDetails.backgroundColor}`,
                   color: `${spaceDetails.color}`,
                 }}
               >
-                <h2>{s.name}</h2>
-                <p>{s.content}</p>
+                <div className="text">
+                  <h2>{s.name}</h2>
+                  <p>{s.content}</p>
+                </div>
                 <img alt={s.name} src={s.imageUrl}></img>
               </div>
             );
