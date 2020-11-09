@@ -15,12 +15,6 @@ import { Jumbotron } from "react-bootstrap";
 import Spaces from "./pages/Spaces/Spaces";
 import MySpace from "./pages/MySpace/MySpace";
 
-const Home = () => (
-  <Jumbotron>
-    <h1>Home</h1>
-  </Jumbotron>
-);
-
 function App() {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAppLoading);
@@ -35,10 +29,10 @@ function App() {
       <MessageBox />
       {isLoading ? <Loading /> : null}
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Spaces} />
         <Route path="/signup" component={SignUp} />
         <Route path="/login" component={Login} />
-        <Route path="/spaces" component={Spaces} />
+        <Route path="/spaces/:id" component={Spaces} />
         <Route path="/user" component={MySpace} />
       </Switch>
     </div>
