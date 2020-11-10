@@ -13,6 +13,10 @@ export default function Navigation() {
 
   const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
+  const mySpaceLink = token ? (
+    <NavbarItem path="/user" linkText="My space" />
+  ) : null;
+
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand as={NavLink} to="/">
@@ -22,7 +26,7 @@ export default function Navigation() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav style={{ width: "100%" }} fill>
           <NavbarItem path="/" linkText="spaces" />
-          <NavbarItem path="/user" linkText="My space" />
+          {mySpaceLink}
           {loginLogoutControls}
         </Nav>
       </Navbar.Collapse>

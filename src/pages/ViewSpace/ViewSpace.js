@@ -5,7 +5,6 @@ import { getSpaceDetails } from "../../store/spaceDetails/actions";
 import { pullStories } from "../../store/spaceDetails/selectors";
 import { Jumbotron } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import moment from "moment";
 
 export default function ViewSpace() {
   const userId = useParams().id;
