@@ -109,3 +109,27 @@ export const getUserWithStoredToken = () => {
     }
   };
 };
+
+export const DeleteStoryWithToken = (id) => {
+  console.log("do i get here?", id);
+  return async (dispatch, getState) => {
+    const token = selectToken(getState());
+
+    if (token === null) return;
+    try {
+      const response = await axios.delete(`${apiUrl}/stories/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("this is response", response);
+      dispatch(getUserWithStoredToken());
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.message);
+      } else {
+        console.log(error);
+      }
+
+      // dispatch(appDoneLoading());
+    }
+  };
+};

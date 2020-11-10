@@ -1,12 +1,13 @@
 import "./MySpace.scss";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUsersSpace } from "../../store/user/selectors";
 import { Jumbotron } from "react-bootstrap";
+import { DeleteStoryWithToken } from "../../store/user/actions";
 
 export default function MySpace() {
   const getSpace = useSelector(selectUsersSpace);
-  console.log("this is space", getSpace);
+  const dispatch = useDispatch();
   const storiesArray = getSpace.stories;
 
   const sorted_Array = storiesArray
@@ -39,6 +40,9 @@ export default function MySpace() {
                   <p>{s.content}</p>
                 </div>
                 <img alt={s.name} src={s.imageUrl}></img>
+                <button onClick={(e) => dispatch(DeleteStoryWithToken(s.id))}>
+                  Delete
+                </button>
               </div>
             );
           })
