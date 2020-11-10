@@ -1,6 +1,6 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
-import { selectToken } from "./selectors";
+import { selectToken, selectUser } from "./selectors";
 import {
   appLoading,
   appDoneLoading,
@@ -11,6 +11,7 @@ import {
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
 export const LOG_OUT = "LOG_OUT";
+export const EDIT_USER = "EDIT_USER";
 
 const loginSuccess = (userWithToken) => {
   return {
@@ -63,7 +64,6 @@ export const login = (email, password) => {
 
       console.log("this is response: login", response);
 
-      // dispatch(getUserWithStoredToken());
       dispatch(loginSuccess(response.data));
       dispatch(showMessageWithTimeout("success", false, "welcome back!", 1500));
       dispatch(appDoneLoading());
@@ -134,5 +134,65 @@ export const DeleteStoryWithToken = (id) => {
         console.log(error);
       }
     }
+  };
+};
+
+export const postStory = (name, content, imageUrl) => async (
+  dispatch,
+  getState
+) => {
+  console.log("do I get here?", name, content, imageUrl);
+  const user = getState().user;
+
+  try {
+    const newPost = await axios.post(
+      `${apiUrl}/spaces/${user.space.id}/stories`,
+      { name, content, imageUrl },
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    dispatch(getUserWithStoredToken());
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+export const updateSpace = (
+  title,
+  description,
+  backgroundColor,
+  color
+) => async (dispatch, getState) => {
+  const user = getState();
+  try {
+    const newSpace = await axios.patch(
+      `${apiUrl}/spaces/${user.space.id}`,
+      {
+        title,
+        description,
+        backgroundColor,
+        color,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    console.log("this is response", newSpace);
+
+    dispatch(editUser(newSpace));
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+export const editUser = (newSpace) => {
+  return {
+    type: EDIT_USER,
+    payload: newSpace,
   };
 };

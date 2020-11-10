@@ -1,3 +1,3 @@
 export const pullStories = (state) => {
-  return state.spaceDetails.data;
+  return state.spaceDetails.space;
 };

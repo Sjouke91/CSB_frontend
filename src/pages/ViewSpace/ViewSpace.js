@@ -5,12 +5,14 @@ import { getSpaceDetails } from "../../store/spaceDetails/actions";
 import { pullStories } from "../../store/spaceDetails/selectors";
 import { Jumbotron } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import Space from "../../components/Space/Space";
+import Stories from "../../components/Stories/Stories";
 
 export default function ViewSpace() {
   const userId = useParams().id;
   const dispatch = useDispatch();
-  const spaceDetails = useSelector(pullStories);
-  const storiesArray = spaceDetails.stories;
+  const getSpace = useSelector(pullStories);
+  const storiesArray = getSpace.stories;
 
   const sorted_Array = storiesArray
     ? storiesArray.sort((a, b) => {
@@ -18,40 +20,22 @@ export default function ViewSpace() {
       })
     : [];
 
-  console.log("this is sorted:", sorted_Array);
-
   useEffect(() => {
     dispatch(getSpaceDetails(userId));
   }, [dispatch, userId]);
 
   return (
     <div className="detailPage">
-      <Jumbotron>
-        <h1>Details page</h1>
-      </Jumbotron>
+      <Space
+        id={getSpace.id}
+        title={getSpace.title}
+        description={getSpace.description}
+        backgroundColor={getSpace.backgroundColor}
+        color={getSpace.color}
+      />
+
       <div className="storyList">
-        {!spaceDetails.stories ? (
-          <h2>Loading... </h2>
-        ) : (
-          sorted_Array.map((s) => {
-            return (
-              <div
-                className="storyCard"
-                key={s.id}
-                style={{
-                  backgroundColor: `${spaceDetails.backgroundColor}`,
-                  color: `${spaceDetails.color}`,
-                }}
-              >
-                <div className="text">
-                  <h2>{s.name}</h2>
-                  <p>{s.content}</p>
-                </div>
-                <img alt={s.name} src={s.imageUrl}></img>
-              </div>
-            );
-          })
-        )}
+        <Stories space={getSpace} />
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import { getUserWithStoredToken } from "./store/user/actions";
 import Spaces from "./pages/Spaces/Spaces";
 import MySpace from "./pages/MySpace/MySpace";
 import ViewSpace from "./pages/ViewSpace/ViewSpace";
+import PostForm from "./pages/MySpace/PostForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/spaces/:id" component={ViewSpace} />
         <Route path="/user" component={MySpace} />
+        <Route path="/user/newStory" component={PostForm} />
       </Switch>
     </div>
   );
