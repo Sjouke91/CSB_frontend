@@ -30,13 +30,13 @@ export const signUp = (name, email, password) => {
   return async (dispatch, getState) => {
     dispatch(appLoading());
     try {
-      const response = await axios.post(`${apiUrl}/signup`, {
+      const newUser = await axios.post(`${apiUrl}/signup`, {
         name,
         email,
         password,
       });
 
-      dispatch(loginSuccess(response.data));
+      dispatch(loginSuccess(newUser.data));
       dispatch(showMessageWithTimeout("success", true, "account created"));
       dispatch(appDoneLoading());
     } catch (error) {
@@ -61,6 +61,9 @@ export const login = (email, password) => {
         password,
       });
 
+      console.log("this is response: login", response);
+
+      // dispatch(getUserWithStoredToken());
       dispatch(loginSuccess(response.data));
       dispatch(showMessageWithTimeout("success", false, "welcome back!", 1500));
       dispatch(appDoneLoading());
@@ -92,6 +95,8 @@ export const getUserWithStoredToken = () => {
       const response = await axios.get(`${apiUrl}/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
+      console.log("this is response", response);
 
       // token is still valid
       dispatch(tokenStillValid(response.data));
@@ -128,8 +133,6 @@ export const DeleteStoryWithToken = (id) => {
       } else {
         console.log(error);
       }
-
-      // dispatch(appDoneLoading());
     }
   };
 };

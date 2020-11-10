@@ -4,7 +4,7 @@ const initialState = {
   token: localStorage.getItem("token"),
   name: null,
   email: null,
-  space: {},
+  space: { stories: [] },
 };
 
 export default (state = initialState, action) => {
